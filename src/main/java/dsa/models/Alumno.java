@@ -1,4 +1,4 @@
-package models;
+package dsa.models;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,15 +9,12 @@ public class Alumno {
     private String nombre;
     private String idInstituto;
 
-    // Listado de operaciones matemáticas realizadas por un alumno
     private List<OperacionMatematica> operacionesRealizadas;
 
-    // Constructor vacío (necesario para el servicio REST)
     public Alumno() {
         this.operacionesRealizadas = new LinkedList<>();
     }
 
-    // Constructor con parámetros
     public Alumno(String idAlumno, String nombre, String idInstituto) {
         this.idAlumno = idAlumno;
         this.nombre = nombre;
@@ -25,12 +22,10 @@ public class Alumno {
         this.operacionesRealizadas = new LinkedList<>();
     }
 
-    // Método para añadir una operación al historial
     public void addOperacion(OperacionMatematica operacion) {
         this.operacionesRealizadas.add(operacion);
     }
 
-    // Getters y Setters
     public String getIdAlumno() {
         return idAlumno;
     }

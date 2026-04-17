@@ -1,5 +1,9 @@
-package dsa;
+package dsa.services;
 
+import dsa.MathManager;
+import dsa.MathManagerImpl;
+import dsa.PeticionOperacionDTO;
+import dsa.exceptions.InstitutoNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,7 +26,6 @@ public class MathService {
     public MathService() {
         this.manager = MathManagerImpl.getInstance();
 
-        // Datos iniciales de prueba para que cuando abras el servidor haya algo
         if (manager.getInstitutosOrdenados().isEmpty()) {
             manager.addInstituto("INSTI-1", "EETAC");
             manager.addInstituto("INSTI-2", "FIB");
@@ -64,10 +67,19 @@ public class MathService {
     @Path("/institutos/{id}/operaciones")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "Obtener operaciones de un instituto")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = OperacionMatematica.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "Instituto no encontrado")
+    })
     public Response getOperacionesInstituto(@PathParam("id") String id) {
-        List<OperacionMatematica> lista = manager.getOperacionesInstituto(id);
-        GenericEntity<List<OperacionMatematica>> entity = new GenericEntity<List<OperacionMatematica>>(lista) {};
-        return Response.status(200).entity(entity).build();
+        try {
+            List<OperacionMatematica> lista = manager.getOperacionesInstituto(id);
+            GenericEntity<List<OperacionMatematica>> entity = new GenericEntity<List<OperacionMatematica>>(lista) {};
+            return Response.status(200).entity(entity).build();
+
+        } catch (InstitutoNotFoundException e) {
+            return Response.status(404).entity("Error: " + e.getMessage()).build();
+        }
     }
 
     @GET

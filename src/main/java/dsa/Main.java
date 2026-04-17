@@ -1,3 +1,6 @@
+package dsa;
+
+import dsa.services.MathService;
 import io.swagger.jaxrs.config.BeanConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
@@ -11,14 +14,8 @@ public class Main {
     public static final String BASE_URI = "http://localhost:8080/dsaApp/";
 
     public static HttpServer startServer() {
-        // En lugar de escanear un paquete, registramos la clase manualmente 
-        // ya que estamos en el directorio raíz
         final ResourceConfig rc = new ResourceConfig();
-
-        // Registramos nuestro servicio
         rc.register(MathService.class);
-
-        // Registramos Swagger
         rc.register(io.swagger.jaxrs.listing.ApiListingResource.class);
         rc.register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
 
@@ -30,6 +27,7 @@ public class Main {
         beanConfig.setDescription("REST API for Math Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
         beanConfig.setVersion("1.0.0");
+        beanConfig.setResourcePackage("dsa");
         beanConfig.setScan(true);
 
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

@@ -1,9 +1,10 @@
+package dsa;
+
 public class PeticionOperacionDTO {
     private String expresion;
     private String idAlumno;
     private String idInstituto;
 
-    // Constructor vacío obligatorio para que el servidor pueda convertir el JSON
     public PeticionOperacionDTO() {
     }
 

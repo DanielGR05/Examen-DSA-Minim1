@@ -1,2 +1,1 @@
-# ProductManager
-# MINIM1
+# Examen-DSA-Minim1
